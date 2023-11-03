@@ -9,16 +9,20 @@ export default async (iso: string, zip: number): Promise<Place> => {
   if (resCiudad.status !== 200 || resPais.status !== 200) {
     throw new Error("La informacion introducida no es valida.");
   }
-  const { place_name } = await resCiudad.json();
+  const { place_name, lat, lng } = await resCiudad.json();
 
   const data = await resPais.json();
   const pais = data[0].name.common;
   const continente = data[0].region;
+  const capital = data[0].capital[0];
 
   const place: Place = {
     ciudad: place_name,
     pais,
     continente,
+    capital,
+    latitude: lat,
+    longitude: lng,
   };
 
   return place;

@@ -3,14 +3,18 @@ export type Monumento = {
   descripcion: string;
   zip: number;
   ciudad: string;
+  capital: string;
   pais: string;
   continente: string;
-  hora: string;
-  clima: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type Place = {
   ciudad: string;
   pais: string;
   continente: string;
+  capital: string;
+  latitude: number;
+  longitude: number;
 };
