@@ -10,7 +10,7 @@ const getMonumento = async (req: Request, res: Response) => {
   try {
     const monumento = await MonumentoModelo.findById(id);
     if (!monumento) {
-      return res.status(400).send(
+      return res.status(404).send(
         "No se ha encontrado el monumento solicitado",
       );
     }
@@ -42,7 +42,7 @@ const getMonumento = async (req: Request, res: Response) => {
 
     res.send(monumentoFinal);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(500).send(error.message);
   }
 };
 

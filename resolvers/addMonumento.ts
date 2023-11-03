@@ -8,7 +8,14 @@ const addMonumento = async (req: Request, res: Response) => {
   try {
     const { nombre, descripcion, zip, iso } = req.body;
     if (!nombre || !descripcion || !zip || !iso) {
-      return res.status(400).send("Falta algun campo");
+      return res.status(500).send("Falta algun campo");
+    }
+
+    const mismoZipNombre = await MonumentoModelo.find({ zip, nombre });
+    if (mismoZipNombre.length > 0) {
+      return res.status(400).send(
+        "Ya hay un monumento con ese nombre con el zip " + zip,
+      );
     }
 
     const place: Place = await zipToPlace(iso, zip);
@@ -28,7 +35,7 @@ const addMonumento = async (req: Request, res: Response) => {
     const saved = await new MonumentoModelo(monumento).save();
     res.status(201).send(saved);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(500).send(error.message);
   }
 };
 
